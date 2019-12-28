@@ -1,6 +1,7 @@
 {
   "name": "passengers",
   "version": "0.0.0",
+  "homepage": "/passengers",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
