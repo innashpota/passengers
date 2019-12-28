@@ -1,5 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {AppComponent} from './app.component';
+
+import {PrimaryPassengerComponent} from './primary-passenger.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -10,19 +11,16 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSelectModule} from '@angular/material/select';
-import {PrimaryPassengerComponent} from './primary-passenger/primary-passenger.component';
-import {SecondaryPassengerComponent} from './secondary-passenger/secondary-passenger.component';
+import {PrimaryPassenger} from './primary-passenger';
 
-describe('AppComponent', () => {
-  let component: AppComponent;
-  let fixture: ComponentFixture<AppComponent>;
+describe('PrimaryPassengerComponent', () => {
+  let component: PrimaryPassengerComponent;
+  let fixture: ComponentFixture<PrimaryPassengerComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent,
-        PrimaryPassengerComponent,
-        SecondaryPassengerComponent
+        PrimaryPassengerComponent
       ],
       imports: [
         BrowserModule,
@@ -42,24 +40,14 @@ describe('AppComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppComponent);
+    fixture = TestBed.createComponent(PrimaryPassengerComponent);
     component = fixture.componentInstance;
+    component.primaryPassenger = new PrimaryPassenger();
     fixture.detectChanges();
   });
 
-  it('should create the app', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it(`should have a primaryPassenger'`, () => {
-    expect(component.primaryPassenger.fullName).toEqual('');
-    expect(component.primaryPassenger.email).toEqual('');
-    expect(component.primaryPassenger.age).toEqual(null);
-    expect(component.primaryPassenger.phoneNumber).toEqual('');
-  });
-
-  it(`should have empty secondPassengers array'`, () => {
-    expect(component.secondaryPassengers.length).toEqual(1);
   });
 
   afterEach(() => {

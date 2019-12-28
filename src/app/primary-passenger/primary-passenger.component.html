@@ -1,0 +1,100 @@
+<mat-card>
+  <mat-card-header>Passenger information</mat-card-header>
+  <mat-card-content>
+    <div class="container-class">
+      <form class="container-class" [formGroup]="controlGroup">
+        <mat-form-field>
+          <input matInput
+                 placeholder="Full name"
+                 formControlName="fullName"
+                 [errorStateMatcher]="errorStateMatcher"
+                 required>
+          <mat-error *ngIf="hasError('fullName', 'required')">
+            Name is required
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 type="number"
+                 placeholder="Age"
+                 formControlName="age"
+                 [errorStateMatcher]="errorStateMatcher"
+                 required>
+          <mat-error *ngIf="hasError('age', 'required')">
+            Age is required
+          </mat-error>
+          <mat-error *ngIf="hasError('age', 'min')">
+            Age must be greater than 0
+          </mat-error>
+          <mat-error *ngIf="hasError('age', 'max')">
+            Age must be lower than 100
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Email"
+                 formControlName="email"
+                 [errorStateMatcher]="errorStateMatcher"
+                 required>
+          <mat-error *ngIf="hasError('email', 'required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="hasError('email', 'email')">
+            Please enter a valid email
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Country</mat-label>
+          <mat-select formControlName="country" required>
+            <mat-option *ngFor="let country of countries" [value]="country">
+              {{country}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="hasError('country', 'required')">
+            Country is required
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Street"
+                 formControlName="street"
+                 [errorStateMatcher]="errorStateMatcher"
+                 required>
+          <mat-error *ngIf="hasError('street', 'required')">
+            Street is required
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Index"
+                 formControlName="index"
+                 [errorStateMatcher]="errorStateMatcher"
+                 required>
+          <mat-error *ngIf="hasError('index', 'required')">
+            Index is required
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput
+                 placeholder="Phone number"
+                 formControlName="phoneNumber"
+                 [errorStateMatcher]="errorStateMatcher"
+                 required>
+          <mat-error *ngIf="hasError('phoneNumber', 'required')">
+            Phone number is required
+          </mat-error>
+          <mat-error *ngIf="hasError('phoneNumber', 'pattern')">
+            Please enter a valid phone number (9+ numbers)
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<div class="button-row">
+  <button mat-raised-button (click)="onNextClick()" [disabled]="this.controlGroup.invalid">
+    <mat-icon>navigate_next</mat-icon>
+    Next
+  </button>
+</div>
