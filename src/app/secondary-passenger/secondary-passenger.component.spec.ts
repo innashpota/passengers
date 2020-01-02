@@ -34,7 +34,7 @@ describe('SecondaryPassengerComponent', () => {
         MatSnackBarModule
       ]
     })
-      .compileComponents();
+        .compileComponents();
   });
 
   beforeEach(() => {
@@ -49,6 +49,71 @@ describe('SecondaryPassengerComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  describe(`should onAddClick()`, () => {
+    it('given secondaryPassengers.length = 0', () => {
+      const spy = spyOn(component.additional, 'removeAt');
+      component.secondaryPassengers = [];
+
+      component.onAddClick();
+
+      expect(spy).toHaveBeenCalledWith(1);
+    });
+
+    it('given secondaryPassengers.length > 0', () => {
+      const spy = spyOn(component.additional, 'push');
+
+      component.onAddClick();
+
+      expect(spy).toHaveBeenCalled();
+      expect(component.additional.length).toEqual(1);
+    });
+  });
+
+  describe(`should onBackClick()`, () => {
+    it('given this.additional.length = 0', () => {
+      component.additional.removeAt(0);
+      const spy = spyOn(component.passengers, 'emit');
+
+      component.onBackClick();
+
+      expect(component.secondaryPassengers.length).toEqual(1);
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('given this.additional.length > 0', () => {
+      component.onBackClick();
+
+      expect(component.additional.length).toEqual(1);
+    });
+  });
+
+  it('should onRemoveClick()', () => {
+    const spyNotification = spyOn<any>(component, 'notification');
+    const spyAdditional = spyOn(component.additional.controls, 'splice');
+    const spyPassengers = spyOn(component.secondaryPassengers, 'splice');
+
+    component.onRemoveClick(0);
+
+    expect(spyNotification).toHaveBeenCalledWith(`Removed passenger.`);
+    expect(spyAdditional).toHaveBeenCalledWith(0, 1);
+    expect(spyPassengers).toHaveBeenCalledWith(0, 1);
+  });
+
+  it('should onSubmitClick()', () => {
+    const spy = spyOn(component.passengers, 'emit');
+    component.secondaryPassengers = [];
+    const input = {passengers: [], next: false, isSubmit: true};
+    const spyNotification = spyOn<any>(component, 'notification');
+
+    component.onSubmitClick();
+
+    expect(spy).toHaveBeenCalledWith(input);
+    expect(spyNotification).toHaveBeenCalledWith(`Submitted!`);
+  });
+
+  it('should disabledSubmit()', () => {
+    expect(component.disabledSubmit()).toBeTruthy();
+  });
   afterEach(() => {
     TestBed.resetTestingModule();
   });
