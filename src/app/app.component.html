@@ -1,10 +1,12 @@
-<div *ngIf="!isNext; else secondaryPassenger">
-  <primary-passenger (passenger)="setPrimaryPassenger($event)"
-                     [primaryPassenger]="primaryPassenger">
-  </primary-passenger>
+<div *ngIf="!isNext; else secondaryPassenger" class="information-form">
+    <primary-passenger (passenger)="setPrimaryPassenger($event)"
+                       [primaryPassenger]="primaryPassenger">
+    </primary-passenger>
 </div>
 <ng-template #secondaryPassenger>
-  <secondary-passenger (passengers)="setSecondaryPassengers($event)"
-                       [secondaryPassengers]="secondaryPassengers">
-  </secondary-passenger>
+    <div class="information-form">
+        <secondary-passenger (passengers)="setSecondaryPassengers($event)"
+                             [secondaryPassengers]="secondaryPassengers">
+        </secondary-passenger>
+    </div>
 </ng-template>
