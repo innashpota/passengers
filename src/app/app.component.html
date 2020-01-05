@@ -4,7 +4,9 @@
     </primary-passenger>
 </div>
 <ng-template #secondaryPassenger>
-    <secondary-passenger (passengers)="setSecondaryPassengers($event)"
-                         [secondaryPassengers]="secondaryPassengers">
-    </secondary-passenger>
+    <div class="information-form">
+        <secondary-passenger (passengers)="setSecondaryPassengers($event)"
+                             [secondaryPassengers]="secondaryPassengers">
+        </secondary-passenger>
+    </div>
 </ng-template>
