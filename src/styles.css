@@ -3,7 +3,6 @@ html, body {
 }
 
 body {
-  margin: 5% 12%;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
@@ -24,4 +23,14 @@ body {
 
 mat-card-header {
   display: contents !important;
+}
+
+.information-form {
+  margin: 5% 12%;
+}
+
+@media screen and (max-width: 600px) {
+  .information-form {
+    margin: 5% 0;
+  }
 }
