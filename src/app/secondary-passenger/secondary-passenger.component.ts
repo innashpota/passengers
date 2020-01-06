@@ -17,24 +17,17 @@ export class SecondaryPassengerComponent implements OnInit {
   @Output() passengers = new EventEmitter<{ passengers: SecondaryPassenger[], next: boolean, isSubmit: boolean }>();
 
   constructor(
-    public snackBar: MatSnackBar,
-    private formBuilder: FormBuilder,
-    private service: AppService
+      public snackBar: MatSnackBar,
+      private formBuilder: FormBuilder,
+      private service: AppService
   ) {
   }
 
   ngOnInit(): void {
     this.controlGroup = this.formBuilder.group({
-      additional: new FormArray([new FormGroup(
-        {
-          fullName: new FormControl(this.secondaryPassengers[0].fullName, Validators.required),
-          age: new FormControl(this.secondaryPassengers[0].age, [
-            Validators.required, Validators.min(0), Validators.max(120)
-          ])
-        }
-      )])
+      additional: new FormArray([])
     });
-    this.extractedSecondaryPassengers();
+    this.fillSecondaryPassengersForm();
   }
 
   hasError(control: AbstractControl, controlName: string, errorCode: string): boolean {
@@ -51,22 +44,12 @@ export class SecondaryPassengerComponent implements OnInit {
 
   onAddClick(): void {
     this.secondaryPassengers.push(new SecondaryPassenger());
-    const numberOfPassengers = this.secondaryPassengers.length || 0;
-    const additionalLength = this.additional.length;
-    if (additionalLength < numberOfPassengers) {
-      for (let i = additionalLength; i < numberOfPassengers; i++) {
-        this.additional.push(this.formBuilder.group({
-          fullName: new FormControl('', Validators.required),
-          age: new FormControl('', [
-            Validators.required, Validators.min(0), Validators.max(120)
-          ])
-        }));
-      }
-    } else {
-      for (let i = additionalLength; i >= numberOfPassengers; i--) {
-        this.additional.removeAt(i);
-      }
-    }
+    this.additional.push(this.formBuilder.group({
+      fullName: new FormControl('', Validators.required),
+      age: new FormControl('', [
+        Validators.required, Validators.min(0), Validators.max(120)
+      ])
+    }));
   }
 
   onBackClick(): void {
@@ -78,16 +61,12 @@ export class SecondaryPassengerComponent implements OnInit {
         passenger.age = fg.value.age;
         this.secondaryPassengers.push(passenger);
       });
-    } else {
-      this.secondaryPassengers.push(new SecondaryPassenger());
     }
     this.passengers.emit({passengers: this.secondaryPassengers, next: false, isSubmit: false});
   }
 
   onRemoveClick(index: number): void {
-    this.notification(
-      `Removed passenger.`
-    );
+    this.notification('Removed passenger.');
     this.additional.controls.splice(index, 1);
     this.secondaryPassengers.splice(index, 1);
   }
@@ -95,47 +74,42 @@ export class SecondaryPassengerComponent implements OnInit {
   onSubmitClick(): void {
     this.service.submit().subscribe(answer => {
       if (answer.status === 'OK') {
-        this.notification(`Submitted!`);
+        this.notification('Submitted!');
       }
       this.passengers.emit({passengers: this.secondaryPassengers, next: false, isSubmit: true});
     });
   }
 
-  disabledSubmit(): boolean {
-    let isDisabled = false;
-    this.additional.controls.map(fg => {
+  disabledSubmit() {
+    return  this.additional.controls.find(fg => {
       if (fg.invalid) {
-        isDisabled = fg.invalid;
-        return;
+        return fg.invalid;
       }
     });
-    return isDisabled;
   }
 
-  private extractedSecondaryPassengers(): void {
-    if (this.secondaryPassengers.length > 0) {
-      for (let i = 1; i <= this.secondaryPassengers.length; i++) {
-        if (this.secondaryPassengers[i]) {
-          this.additional.push(this.formBuilder.group({
-            fullName: new FormControl(this.secondaryPassengers[i].fullName, Validators.required),
-            age: new FormControl(this.secondaryPassengers[i].age, [
-              Validators.required, Validators.min(0), Validators.max(120)
-            ])
-          }));
-        }
+  private fillSecondaryPassengersForm(): void {
+    for (let i = 0; i <= this.secondaryPassengers.length; i++) {
+      if (this.secondaryPassengers[i]) {
+        this.additional.push(this.formBuilder.group({
+          fullName: new FormControl(this.secondaryPassengers[i].fullName, Validators.required),
+          age: new FormControl(this.secondaryPassengers[i].age, [
+            Validators.required, Validators.min(0), Validators.max(120)
+          ])
+        }));
       }
     }
   }
 
   private notification(message) {
     this.snackBar.open(
-      message,
-      null,
-      {
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        duration: 5 * 1000
-      }
+        message,
+        null,
+        {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 3 * 1000
+        }
     );
   }
 }

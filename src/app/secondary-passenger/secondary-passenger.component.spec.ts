@@ -49,7 +49,7 @@ describe('SecondaryPassengerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe(`should onAddClick()`, () => {
+  describe('should onAddClick()', () => {
     it('given secondaryPassengers.length = 0', () => {
       const spy = spyOn(component.additional, 'removeAt');
       component.secondaryPassengers = [];
@@ -69,7 +69,7 @@ describe('SecondaryPassengerComponent', () => {
     });
   });
 
-  describe(`should onBackClick()`, () => {
+  describe('should onBackClick()', () => {
     it('given this.additional.length = 0', () => {
       component.additional.removeAt(0);
       const spy = spyOn(component.passengers, 'emit');
@@ -94,7 +94,7 @@ describe('SecondaryPassengerComponent', () => {
 
     component.onRemoveClick(0);
 
-    expect(spyNotification).toHaveBeenCalledWith(`Removed passenger.`);
+    expect(spyNotification).toHaveBeenCalledWith('Removed passenger.');
     expect(spyAdditional).toHaveBeenCalledWith(0, 1);
     expect(spyPassengers).toHaveBeenCalledWith(0, 1);
   });
@@ -108,7 +108,7 @@ describe('SecondaryPassengerComponent', () => {
     component.onSubmitClick();
 
     expect(spy).toHaveBeenCalledWith(input);
-    expect(spyNotification).toHaveBeenCalledWith(`Submitted!`);
+    expect(spyNotification).toHaveBeenCalledWith('Submitted!');
   });
 
   it('should disabledSubmit()', () => {
