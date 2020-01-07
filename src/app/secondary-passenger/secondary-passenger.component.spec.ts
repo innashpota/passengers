@@ -49,24 +49,13 @@ describe('SecondaryPassengerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('should onAddClick()', () => {
-    it('given secondaryPassengers.length = 0', () => {
-      const spy = spyOn(component.additional, 'removeAt');
-      component.secondaryPassengers = [];
+  it('should onAddClick()', () => {
+    const spy = spyOn(component.additional, 'push');
 
-      component.onAddClick();
+    component.onAddClick();
 
-      expect(spy).toHaveBeenCalledWith(1);
-    });
-
-    it('given secondaryPassengers.length > 0', () => {
-      const spy = spyOn(component.additional, 'push');
-
-      component.onAddClick();
-
-      expect(spy).toHaveBeenCalled();
-      expect(component.additional.length).toEqual(1);
-    });
+    expect(spy).toHaveBeenCalled();
+    expect(component.additional.length).toEqual(1);
   });
 
   describe('should onBackClick()', () => {
@@ -76,7 +65,7 @@ describe('SecondaryPassengerComponent', () => {
 
       component.onBackClick();
 
-      expect(component.secondaryPassengers.length).toEqual(1);
+      expect(component.secondaryPassengers.length).toEqual(0);
       expect(spy).toHaveBeenCalled();
     });
 

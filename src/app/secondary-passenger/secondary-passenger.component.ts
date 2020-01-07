@@ -80,12 +80,9 @@ export class SecondaryPassengerComponent implements OnInit {
     });
   }
 
-  disabledSubmit() {
-    return  this.additional.controls.find(fg => {
-      if (fg.invalid) {
-        return fg.invalid;
-      }
-    });
+  disabledSubmit(): boolean {
+    const abstractControl = this.additional.controls.find(fg => fg.invalid);
+    return !!abstractControl;
   }
 
   private fillSecondaryPassengersForm(): void {
