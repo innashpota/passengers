@@ -64,7 +64,7 @@ describe('AppComponent', () => {
     expect(component.secondaryPassengers.length).toEqual(1);
   });
 
-  describe(`should setSecondaryPassengers()`, () => {
+  describe('should setSecondaryPassengers()', () => {
     it('given isSubmit = true', () => {
       const input = {passengers: [], next: true, isSubmit: true};
 

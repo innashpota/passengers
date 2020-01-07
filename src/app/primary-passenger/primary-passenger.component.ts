@@ -20,7 +20,7 @@ export class PrimaryPassengerComponent implements OnInit {
     this.controlGroup = new FormGroup({
       fullName: new FormControl(this.primaryPassenger.fullName, Validators.required),
       age: new FormControl(this.primaryPassenger.age, [
-        Validators.required, Validators.min(0), Validators.max(100)
+        Validators.required, Validators.min(0), Validators.max(120)
       ]),
       email: new FormControl(this.primaryPassenger.email, [
         Validators.required, Validators.email
